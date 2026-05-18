@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.journel.proj.demo.Services.Helloservices;
 import com.journel.proj.demo.entity.Journalentry;
-
-
 
 
 @RestController
@@ -24,11 +23,22 @@ import com.journel.proj.demo.entity.Journalentry;
 public class Readerpage {
 
   private Map<Long, Journalentry> journalentry= new HashMap<>();
+  private Helloservices hello;
+  public Readerpage(Helloservices hello){
+    this.hello= hello;
+  }
+
   
   @GetMapping("/read")                                 //  this method available at  ../journal/read 
   public List<Journalentry> getMethodName() {
       return new ArrayList<>(journalentry.values());
   }
+
+  @GetMapping("/hello")                      // Service layer test API
+  public String servicehello() {
+      return hello.sayhello();
+  }
+  
 
   @PostMapping("/create-entries")
   public boolean createEntry(@RequestBody Journalentry myentry){          // requestbody is added to the db
